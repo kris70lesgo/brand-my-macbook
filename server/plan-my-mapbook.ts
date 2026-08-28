@@ -2,7 +2,6 @@ import crypto from "node:crypto";
 import type { Express, Request, Response } from "express";
 import express from "express";
 import { createClient } from "@supabase/supabase-js";
-import DodoPayments from "dodopayments";
 
 const LOGO_BUCKET = "plan-my-mapbook-logos";
 const MAX_LOGO_BYTES = 5 * 1024 * 1024;
@@ -37,8 +36,11 @@ function config() {
   return values as Record<keyof typeof values, string>;
 }
 
-function getDodo() {
+async function getDodo() {
   const values = config();
+  // Delay loading the payment SDK until a payment route is called. This keeps
+  // read-only auction routes available in serverless runtimes during cold start.
+  const { default: DodoPayments } = await import("dodopayments");
   return new DodoPayments({
     bearerToken: values.dodoApiKey,
     webhookKey: values.dodoWebhookKey,
@@ -98,7 +100,7 @@ function dataUrlToLogo(dataUrl: unknown) {
 export function attachPlanMyMapbookApi(app: Express) {
   app.post("/api/dodo/webhook", express.raw({ type: "application/json" }), async (req, res) => {
     try {
-      const dodo = getDodo();
+      const dodo = await getDodo();
       const rawBody = Buffer.isBuffer(req.body) ? req.body.toString("utf8") : "";
       const headers = ["webhook-id", "webhook-signature", "webhook-timestamp"].reduce<Record<string, string>>((result, name) => {
         const value = req.header(name);
@@ -232,7 +234,7 @@ export function attachPlanMyMapbookApi(app: Express) {
         return;
       }
 
-      const dodo = getDodo();
+      const dodo = await getDodo();
       const session = await dodo.checkoutSessions.create({
         product_cart: [{ product_id: config().dodoProductId, quantity: 1, amount: depositCents }],
         customer: { email: input.email, name: input.contactName },
