@@ -1,5 +1,5 @@
 import express from "express";
-import { attachPlanMyMapbookApi } from "../server/plan-my-mapbook";
+import { attachPlanMyMapbookApi } from "../server/plan-my-mapbook.js";
 
 /** Vercel Node function that serves every Plan My Mapbook API endpoint. */
 const app = express();
