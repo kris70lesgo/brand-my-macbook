@@ -238,7 +238,6 @@ export function attachPlanMyMapbookApi(app: Express) {
       const session = await dodo.checkoutSessions.create({
         product_cart: [{ product_id: config().dodoProductId, quantity: 1, amount: depositCents }],
         customer: { email: input.email, name: input.contactName },
-        customer_business_name: input.companyName,
         metadata: metadataFor(input, checkoutToken, depositCents),
         return_url: `${origin}/?checkout_token=${checkoutToken}`,
         cancel_url: `${origin}/?checkout_cancelled=1`,
