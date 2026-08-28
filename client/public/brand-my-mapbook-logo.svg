@@ -1,0 +1,15 @@
+<svg fill="none" height="48" viewBox="0 0 40 48" width="40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g fill="#2563eb">
+    <path d="M0 4H10V14H0Z"/>
+    <path d="M20 4H30V14H20Z" opacity=".6"/>
+    <path d="M10 14H20V24H10Z" opacity=".6"/>
+    <path d="M20 14H30V24H20Z" opacity=".45"/>
+    <path d="M30 14H40V24H30Z" opacity=".3"/>
+    <path d="M0 24H10V34H0Z" opacity=".6"/>
+    <path d="M10 24H20V34H10Z" opacity=".45"/>
+    <path d="M20 24H30V34H20Z" opacity=".3"/>
+    <path d="M30 24H40V34H30Z" opacity=".15"/>
+    <path d="M10 34H20V44H10Z" opacity=".3"/>
+    <path d="M20 34H30V44H20Z" opacity=".15"/>
+  </g>
+</svg>
